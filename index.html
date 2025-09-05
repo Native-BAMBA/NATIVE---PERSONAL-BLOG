@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NATIVE | My Personal Blog</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2f9c9d;
+      --primary-dark: #247e7f;
+      --secondary: #2c3e50;
+      --accent: #e67e22;
+      --light: #f8f9fa;
+      --gray: #7f8c8d;
+      --dark: #343a40;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--dark);
+      font-family: 'Source Serif Pro', serif;
+      line-height: 1.6;
+      padding: 15px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      position: relative;
+    }
+
+    .profile-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      border: 4px solid white;
+      background: #5BFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .profile-container i {
+      font-size: 60px;
+      color: white;
+    }
+
+    .blogTitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideIn 1s forwards;
+    }
+
+    .subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(15px);
+      animation: slideIn 1s forwards;
+      animation-delay: 0.5s;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      color: var(--primary);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 1s forwards;
+      animation-delay: 1s;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .social-btn:nth-child(2) { animation-delay: 1.2s; }
+    .social-btn:nth-child(3) { animation-delay: 1.3s; }
+    .social-btn:nth-child(4) { animation-delay: 1.2s; }
+    .social-btn:nth-child(5) { animation-delay: 1s; }
+
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+      color: var(--accent);
+    }
+
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
+
+    section { padding: 25px 20px; }
+    
+    .quote-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw + 0.5rem, 2rem); /* Responsive font size */
+  color: #0A3D62;
+  display: inline-block;
+  padding: 8px 18px;
+  margin-bottom: 20px;
+  border-left: 4px solid #228be6; /* Simple accent line */
+  border-right: 4px solid #228be6; /* Simple accent line */
+  background: #f8f9fa; /* Light neutral background */
+  border-radius: 8px;
+}
+    
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    p { margin-bottom: 20px; font-size: 1rem; text-align: left; line-height: 1.7; }
+
+    .highlight { color: var(--primary-dark); font-weight: 600; }
+
+    .skills-container { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+
+    .skill {
+      background: var(--light);
+      padding: 6px 15px;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      border: 1px solid #e2e8f0;
+      transition: var(--transition);
+    }
+
+    .skill:hover { background: var(--primary); color: white; transform: translateY(-2px); }
+
+    footer {
+      background: var(--secondary);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .blog-content { display: grid; grid-template-columns: 1fr; gap: 25px; }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid var(--primary);
+      white-space: nowrap;
+      margin: 0 auto 10px;
+      letter-spacing: .05em;
+      animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary) } }
+
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .visible { opacity: 1; transform: translateY(0); }
+
+    /* Personal Info */
+    .personal-info { background: var(--light); padding: 20px; border-radius: 10px; margin: 20px 0; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); }
+    
+     /* Quotes Section */
+.personal-quotes {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  margin: 24px 0;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* Animated Gradient Border */
+.personal-quotes::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* border thickness */
+  border-radius: inherit;
+  background: linear-gradient(120deg, #228be6, #15aabf, #4dabf7, #228be6);
+  background-size: 300% 300%;
+  animation: borderAnim 6s linear infinite;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Hover effect */
+.personal-quotes:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  background-color: #b9f5ff;
+}
+
+/* Quote Box */
+.quote-box {
+  position: relative;
+  text-align: center;
+  padding: 32px 20px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.quote-box:hover {
+  box-shadow: 0 8px 24px rgba(34, 139, 230, 0.15);
+}
+
+/* Quote Theme */
+.quote-theme {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #228be6;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideDown 1s ease forwards;
+  animation-delay: 1.2s;
+}
+
+/* Quote Text */
+.quote-text {
+  margin-top: 18px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #1e293b;
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+  animation-delay: 2.4s;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+.progress {
+  height: 100%;
+  width: 100%; /* Keep full width for animation cycle */
+  background: linear-gradient(90deg, #228be6, #4dabf7);
+  animation: progressAnim 10s linear infinite; /* Loop forever */
+  border-radius: inherit;
+}
+
+/* Animations */@keyframes borderAnim {
+  0% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+  50% { background-position: 100% 50%; filter: hue-rotate(180deg); }
+  100% { background-position: 0% 50%; filter: hue-rotate(360deg); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* Progress bar loop animation */
+@keyframes progressAnim {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+    /* Info Grid */
+    .info-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+    .info-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+    .info-item:last-child { border-bottom: none; }
+    .info-icon {
+      width: 40px; height: 40px; background: var(--primary); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin-right: 15px;
+      color: white; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .info-content { flex-grow: 1; }
+    .info-label { font-size: 0.85rem; color: var(--gray); margin-bottom: 3px; font-family: 'Montserrat', sans-serif; }
+    .info-value { font-weight: 600; color: var(--secondary); font-family: 'Montserrat', sans-serif; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .container { border-radius: 10px; }
+      header { padding: 20px 10px; }
+      .blogTitle { font-size: 1.8rem; }
+      section { padding: 20px 15px; }
+      .section-title { font-size: 1.4rem; }
+      p { font-size: 0.95rem; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) {
+      .profile-container { width: 100px; height: 100px; }
+      .profile-container i { font-size: 50px; }
+      .blogTitle { font-size: 1.6rem; }
+      .subtitle { font-size: 0.9rem; }
+      .social-btn { width: 40px; height: 40px; font-size: 1rem; }
+      .section-title { font-size: 1.3rem; }
+      .skill { font-size: 0.8rem; padding: 5px 12px; }
+      .info-item { flex-direction: column; align-items: flex-start; text-align: left; }
+      .info-icon { margin-bottom: 8px; margin-right: 0; }
+    }
+    @media (max-width: 360px) {
+      .blogTitle { font-size: 1.4rem; }
+      .subtitle { font-size: 0.85rem; }
+      .section-title { font-size: 1.2rem; }
+      .social-buttons { gap: 8px; }
+      .social-btn { width: 36px; height: 36px; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="profile-container"><i class="fas fa-user-circle"></i></div>
+      <h1 class="blogTitle">ISSA BAMBA</h1>
+      <h4 class="subtitle">STUDENT ✦ DEVELOPER</h4>
+      <div class="social-buttons">
+        <a href="mailto:nativebamba@gmail.com" class="social-btn"><i class="far fa-envelope fa-lg"></i></a>
+        <a href="https://www.instagram.com/nativebamba?igsh=Z3N2bGhoZzl2Z2pw" class="social-btn"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="https://wa.me/2250574917022" class="social-btn"><i class="fab fa-whatsapp fa-fade fa-lg" style="color: #0CE300;"></i></a>
+        <a href="https://www.linkedin.com/in/issa-bamba-91674b375?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.facebook.com/nativeBAMBA" class="social-btn"><i class="fab fa-facebook fa-lg"></i></a>
+      </div>
+    </header>
+
+    <section>
+      <div class="blog-content">
+        <div class="welcome">
+          <h2 class="section-title">Welcome to My Blog!</h2>
+          <p class="typewriter">Hello! I'm Bamba, a first-year English student and aspiring developer.</p>
+          <p>My name is Bamba, and I am a first-year student in the Department of English at the University Félix Houphouët-Boigny, Cocody–Abidjan. In addition, I am beginning my journey as a web developer, currently exploring JavaScript, HTML, and Python.</p>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="personal-info">
+          <h2 class="section-title">Personal Information</h2>
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-user-tag"></i></div>
+            <div class="info-content"><div class="info-label">NickName</div><div class="info-value">NATIVE</div></div>
+          </div>
+          <div class="info-grid">
+            <div class="info-item"><div class="info-icon"><i class="fas fa-user"></i></div><div class="info-content"><div class="info-label">FirstName</div><div class="info-value">ISSA</div></div></div>
+            <div class="info-item"><div class="info-icon"><i class="fas fa-user-alt"></i></div><div class="info-content"><div class="info-label">SurName</div><div class="info-value">BAMBA</div></div></div>
+            <div class="info-item"><div class="info-icon"><i class="fas fa-map-marker-alt"></i></div><div class="info-content"><div class="info-label">Country</div><div class="info-value">Côte d'Ivoire</div></div></div>
+            <div class="info-item"><div class="info-icon"><i class="fas fa-globe"></i></div><div class="info-content"><div class="info-label">Languages</div><div class="info-value">French, English</div></div></div>
+            <div class="info-item"><div class="info-icon"><i class="fas fa-graduation-cap"></i></div><div class="info-content"><div class="info-label">Education</div><div class="info-value">Literary Arts Faculty, UFHB</div></div></div>
+            <div class="info-item"><div class="info-icon"><i class="fas fa-code"></i></div><div class="info-content"><div class="info-label">Interests</div><div class="info-value">Coding, Technology, Robotics</div></div></div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="section-title">Coding Passion</h2>
+          <p>Coding has always fascinated me. I have a deep interest in technology, robotics, and electronics, and programming allows me to combine these passions in a creative and practical way.</p>
+        </div>
+        
+        <div>
+                    <h2 class="section-title">My Experience</h2>
+                    <p>My strongest background so far is in JavaScript, particularly BJ's scripts, through which I have developed several Telegram bots. This has been an exciting way to apply my skills in real projects.</p>
+                    <p>As for HTML and Python, I am still at the early stages of learning. However, I dedicate time each day to improving my knowledge and working toward greater proficiency.</p>
+                    
+                    <div class="skills-container">
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">HTML/CSS</span>
+                        <span class="skill">Python</span>
+                        <span class="skill">Telegram Bots</span>
+                        <span class="skill">Web Development</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="section-title">My Vision</h2>
+                    <p>My goal is to continue growing both academically and professionally, developing skills that will enable me to contribute meaningfully to the world of technology.</p>
+                    <p>Through this blog, I hope to share my progress, connect with others, and inspire fellow learners along the way.</p>
+                </div>
+
+                <!-- ✅ Quotes Section -->
+                <section class="personal-quotes">
+                  <h2 class="quote-title">QUOTES</h2>
+
+                  <div class="quote-box">
+                    <div class="quote-theme"; style: "margin: 10px;">MONEY 💰</div>
+                    <div class="quote-text">BE QUIET</div>
+                    
+           <!-- Progress Bar -->
+              <div class="progress-bar">
+                <div class="progress"></div>
+                  </div>
+                    
+                  </div>
+                </section>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2025 NATIVES. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Scroll animation for elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeOptions = {
+                threshold: 0.2
+            };
+            
+            const fadeObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, fadeOptions);
+            
+            fadeElements.forEach(element => {
+                fadeObserver.observe(element);
+            });
+        });
+
+        // =======================
+        // Quotes Rotation Logic
+        // =======================
+        
+        const quotes = [
+          { theme: "😴 MINDSET 🧠", text: "I AM TOO OLD FOR GAMES<br>TOO TIRED TO PRETEND<br>TOO WISE FOR LIES<br>AND TOO YOUNG FOR LOVE" },
+          { theme: "⏳ TIME 💸" , text: "THEY SAY <b>TIME IS MONEY.</b><br>BUT I’VE REALIZED FAR MORE DANGEROUS:<br><b>TIME CAN ALSO BE DEBT.</>" },
+          { theme: "🙇‍♀️ HONESTY 🙅‍♂️", text: "ONE THING ☝🏾: BE HONEST, HAVE YOU EVER TRULY QUESTIONED MISUNDERSTANDINGS WITH OTHERS? NO! NEVER. BECAUSE YOU ALWAYS ASSUME THEY ARE WRONG, NEVER YOU 🫵🏿" }
+        ];
+        
+let index = 0;
+function showQuote() {
+  const themeEl = document.querySelector(".quote-theme");
+  const textEl = document.querySelector(".quote-text");
+  const circleEl = document.querySelector(".progress");
+
+  // Reset animations
+  themeEl.style.animation = "none";
+  textEl.style.animation = "none";
+  circleEl.style.animation = "none";
+
+  void themeEl.offsetWidth; // Force reflow
+
+  // Update content
+  themeEl.textContent = quotes[index].theme;
+  textEl.textContent = quotes[index].text;
+
+  // Re-apply animations
+  themeEl.style.animation = "slideDown 1s ease forwards";
+  textEl.style.animation = "fadeIn 1.5s ease forwards";
+  circleEl.style.animation = "progressAnim 10s linear forwards";
+
+  // Next index
+  index = (index + 1) % quotes.length;
+}
+
+// Initial call
+showQuote();
+setInterval(showQuote, 10000);
+        
+    </script>
+</body>
+</html>
